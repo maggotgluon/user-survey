@@ -53,3 +53,19 @@ input:invalid, textarea:invalid, select:invalid {
 [x-cloak] {
     display: none;
 }
+
+@font-face {
+    font-family: 'Taviraj';
+    src: url('/public/fonts/Taviraj-Regular.otf');
+}
+.servey-btn{
+    border: none;
+    transition: all 500ms;
+    aspect-ratio: 1;
+    border-radius: 100vw;
+    padding: 0;
+}
+.servey-btn:hover, .servey-btn:focus{
+    transform: scale(1.05);
+    z-index: 10;
+}

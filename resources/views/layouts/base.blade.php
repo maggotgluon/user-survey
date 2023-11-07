@@ -12,14 +12,13 @@
 
         <!-- Favicon -->
 		<link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
+        @vite(['resources/sass/app.scss'])
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        @vite(['resources/js/app.js'])
+        @wireUiScripts
         @livewireStyles
         @livewireScripts
-        @wireUiScripts
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,7 +26,6 @@
 
     <body>
         @yield('body')
-
 
     </body>
 </html>

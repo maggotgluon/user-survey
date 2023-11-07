@@ -8,7 +8,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+                Taviraj: ['Taviraj', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 primary: colors.indigo,
