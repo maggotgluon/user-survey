@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2220b4fb346a81f2cbf4847e2007960",
+    "content-hash": "3e6e89743ffebd80b906dd3a3f0bf291",
     "packages": [
         {
             "name": "asantibanez/livewire-charts",
@@ -1102,6 +1102,67 @@
                 "source": "https://github.com/laravel-frontend-presets/tall"
             },
             "time": "2023-10-23T11:33:46+00:00"
+        },
+        {
+            "name": "laravel-ready/readable-numbers",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-ready/readable-numbers.git",
+                "reference": "6a32fb002f7830bfc9732cbdecf1b7303dfe8754"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-ready/readable-numbers/zipball/6a32fb002f7830bfc9732cbdecf1b7303dfe8754",
+                "reference": "6a32fb002f7830bfc9732cbdecf1b7303dfe8754",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0 || ^9.0",
+                "php": "^8.1 || ^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5 || ^1.4",
+                "orchestra/testbench": "^7.5 || ^7.0.0",
+                "phpunit/phpunit": "^10.0 || ^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelReady\\ReadableNumbers\\ReadableNumbersServiceProvider"
+                    ],
+                    "aliases": {
+                        "ReadableNumbers": "LaravelReady\\ReadableNumbers\\Facades\\ReadableNumbers"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelReady\\ReadableNumbers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EgoistDeveloper",
+                    "email": "epsilonelittr@gmail.com"
+                }
+            ],
+            "description": "Human readable numbers for Laravel",
+            "keywords": [
+                "human readable numbers",
+                "laravel",
+                "readable numbers"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-ready/readable-numbers/issues",
+                "source": "https://github.com/laravel-ready/readable-numbers"
+            },
+            "time": "2023-03-14T23:57:04+00:00"
         },
         {
             "name": "laravel/framework",

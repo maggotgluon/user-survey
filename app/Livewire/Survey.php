@@ -29,7 +29,7 @@ class Survey extends Component
     }
     public function checkRecord(){
         $record = answer::where('user',$this->udid)
-        ->where('location',request()->ip())
+        ->where('location',$this->loc??request()->ip())
         ->where('questions_id',$this->question->id)
         ->whereBetween('created_at',[today(),now()])
         ->count();
@@ -66,7 +66,7 @@ class Survey extends Component
         $ans = answer::create([
             'questions_id' => $this->question->id,
             'socre' => $rate,
-            'Location' => request()->ip(),
+            'Location' => $this->loc??request()->ip(),
             'deviceAgent' => request()->userAgent(),
             'user' => $this->udid,
         ]);

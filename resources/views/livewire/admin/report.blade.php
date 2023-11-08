@@ -1,11 +1,11 @@
-<div class="container mx-auto relative">
+<div class="container mx-auto relative font-Taviraj">
     <x-nav />
     <section class="h-28">
         
     </section>
     <section class="bg-slate-50 shadow grid grid-cols-2 lg:grid-cols-4 gap-2 p-5 rounded-xl">
         <div class="col-span-2 lg:col-span-4">
-            <h1>Report</h1>
+            <h1 class="text-4xl font-bold">Report</h1>
         
             <div class="flex gap-2 ">
                 <div>
@@ -17,7 +17,8 @@
                     />
                 </div>
                 <div class="flex flex-col justify-between">
-                    <x-toggle label="Month" wire:model="date.monthMode" />
+                    {{-- {{$date['month']}} --}}
+                    <x-toggle label="Month" wire:model.live="date.monthMode" />
                     @if ($date['monthMode'])
                         <x-native-select
                             
@@ -38,12 +39,12 @@
                             ]"
                             option-label="name"
                             option-value="value"
-                            wire:model="date.month"
+                            wire:model.live="date.month"
                         />
                     @endif
 
                 </div>
-                <x-toggle label="Show Chart" wire:model="date.chartMode" />
+                <x-toggle label="Show Chart" wire:model.live="date.chartMode" />
 
                 <div class="ml-auto">
                     <x-button label="Download Summery" wire:click="exportDataSum" />
@@ -80,7 +81,7 @@
         </div>
 
         <hr class="col-span-2 lg:col-span-4">
-
+        
         <div class="col-span-2 lg:col-span-4">
             <x-card title="Summery Data">
                 <div class="overflow-x-scroll min-w-full">
@@ -132,6 +133,141 @@
         </div>
 
         <hr class="col-span-2 lg:col-span-4">
+        @if($date['chartMode'])
+        @foreach ($data as $location=>$data)
+            <div class="{{$location=='total'?'col-span-2 lg:col-span-1':''}} capitalize">
+                <x-card title="{{$location}}">
+                    <livewire:livewire-pie-chart 
+                        key="{{ $chartModel[$location]->reactiveKey() }}"
+                        :pie-chart-model="$chartModel[$location]"/>
+                        
+                        <table class="text-xs w-full">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"> {{$location}} </th>
+                                    <th class="border border-primary-200 bg-primary-100 p-2 w-1/12">TOTAL</th>
+                                    <th class="border border-primary-200 bg-primary-100 p-2 w-1/12">Percentile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-1 border border-primary-200">Excellent (5)</td><td class="p-1 border border-primary-200 text-right">{{$data['score_5']}}</td><td class="p-1 border border-primary-200 text-right">{{$data['percentile_5']}}%</td>
+                                </tr><tr>
+                                    <td class="p-1 border border-primary-200">Good (4)</td><td class="p-1 border border-primary-200 text-right">{{$data['score_4']}}</td><td class="p-1 border border-primary-200 text-right">{{$data['percentile_4']}}%</td>
+                                </tr><tr>
+                                    <td class="p-1 border border-primary-200">Acceptable (3)</td><td class="p-1 border border-primary-200 text-right">{{$data['score_3']}}</td><td class="p-1 border border-primary-200 text-right">{{$data['percentile_3']}}%</td>
+                                </tr><tr>
+                                    <td class="p-1 border border-primary-200">Poor (2)</td><td class="p-1 border border-primary-200 text-right">{{$data['score_2']}}</td><td class="p-1 border border-primary-200 text-right">{{$data['percentile_2']}}%</td>
+                                </tr><tr>
+                                    <td class="p-1 border border-primary-200">Unacceptable (1)</td><td class="p-1 border border-primary-200 text-right">{{$data['score_1']}}</td><td class="p-1 border border-primary-200 text-right">{{$data['percentile_1']}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </x-card>
+            </div>
+        @endforeach
+
+        <div class="col-span-2 lg:col-span-4">
+            
+            
+            <ul class="lg:flex gap-4 justify-center ">
+                <li class=""><x-icon name="chart-pie" class="w-5 h-5 text-red-500 inline" solid /> <span class="text-base">Unacceptable (1)</span></li>
+                <li class=""><x-icon name="chart-pie" class="w-5 h-5 text-orange-500 inline" solid /> <span class="text-base">Poor (2)</span></li>
+                <li class=""><x-icon name="chart-pie" class="w-5 h-5 text-yellow-500 inline" solid /> <span class="text-base">Acceptable (3)</span></li>
+                <li class=""><x-icon name="chart-pie" class="w-5 h-5 text-lime-500 inline" solid /> <span class="text-base">Good (4)</span></li>
+                <li class=""><x-icon name="chart-pie" class="w-5 h-5 text-green-500 inline" solid /> <span class="text-base">Excellent (5)</span></li>
+            </ul>
+        </div>
+
+        <hr class="col-span-2 lg:col-span-4">
+        @endif
+        <div class="col-span-2 lg:col-span-4 flex justify-start gap-2">
+            <div>
+            <x-native-select
+                label="Show"
+                placeholder="Selected"
+                :options="['5','15','25','50','100','show all']"
+                wire:model.live="pagination.show"
+            />
+            </div><div>
+            <x-native-select
+                label="Location"
+                placeholder="Selected"
+                :options="$list['location']"
+                wire:model.live="pagination.location"
+            />
+            </div>
+
+            <div class="ml-auto">
+                <x-button label="Download Raw Data"  wire:click="exportDataAll" />
+            </div>
+        </div>
+
+        <div class="col-span-2 lg:col-span-4">
+            <x-card title="Raw Data">
+                <table  class="border w-full">
+                    <thead>
+                        <tr class="bg-primary-100">
+                            {{-- <th>ID</th> --}}
+                            <th class="p-4 w-3/12">Location</th>
+                            <th class="p-4 ">Wristband</th>
+                            <th class="p-4 w-1/12">Score</th>
+                            <th class="p-4 w-2/12">Date Create</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        @foreach($raw->sortByDesc('created_at') as $ans)
+                    <tr class="hover:bg-secondary-100">
+                        {{-- <td class="text-center">{{$ans->id}}</td> --}}
+                        
+                        <td class="p-2 text-center border border-primary-100 capitalize">
+                            {{-- {{dd($ans->Location)}} --}}
+                            @switch ($ans->Location)
+                            @case ('172.16.110.196')
+                            Ticketing
+                            @break
+                            @case ('172.16.110.224')
+                            LostAndFound
+                            @break
+                            @case ('172.16.110.246')
+                            Locker
+                            @break
+                            @case ('172.16.110.248')
+                            Retail
+                            @break
+                            @case ('172.16.110.249')
+                            TheVillage
+                            @break
+                            @case ('172.16.110.244')
+                            Tropical
+                            @break
+                            @case ('172.16.110.161')
+                            EmeraldSandbar
+                            @break
+                            @case ('172.16.110.205')
+                            Wavebar
+                            @break
+                            @default
+                            Other
+                            @endswitch
+                            <!-- {{$ans->Location}} -->
+                        </td>
+                        <td class="p-2 border border-primary-100 capitalize">{{$ans->user}}</td>
+                        <td class="p-2 text-center border border-primary-100 capitalize">{{$ans->socre}}</td>
+                        <td class="p-2 border border-primary-100 capitalize text-center">{{$ans->created_at->diffForHumans(Carbon\Carbon::now())}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            
+            @if(get_class($raw)=='Illuminate\Pagination\LengthAwarePaginator')
+            <div class="my-4">
+            {{ $raw->links() }}
+            </div>
+            @endif
+            </x-card>
+        </div>
 
 
         @else

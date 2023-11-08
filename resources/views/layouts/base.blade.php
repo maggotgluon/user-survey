@@ -15,11 +15,11 @@
         @vite(['resources/sass/app.scss'])
 
 
-        @vite(['resources/js/app.js'])
         @wireUiScripts
+        @vite(['resources/js/app.js'])
         @livewireStyles
         @livewireScripts
-
+        @livewireChartsScripts
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>

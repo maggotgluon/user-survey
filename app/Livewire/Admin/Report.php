@@ -49,16 +49,20 @@ class Report extends Component
             $this->list['location']=$answer->get()->unique('Location')->pluck('Location');
             $this->getData($answer);
             $locationLineModel=new LineChartModel();
-            $locationLineModel->setYAxisVisible(false)->withLegend()->withDataLabels();
+            $locationLineModel->setYAxisVisible(true)->withLegend()->withDataLabels()->setJsonConfig([
+                'yaxis.min'=>0,
+                'yaxis.tickAmount'=> 4
+            ]);
             
             foreach ($this->data as $key => $value) {
                 $locationPieModel[$key]=(new PieChartModel())
-                                ->setTitle($key)
+                                // ->setTitle($key)
                                 ->addSlice('Unacceptable (1)',$value['score_1'],'#d8402b')
                                 ->addSlice('Poor (2)',$value['score_2'],'#fd740d')
                                 ->addSlice('Acceptable (3)',$value['score_3'],'#ffd302')
                                 ->addSlice('Good (4)',$value['score_4'],'#a1d22a')
-                                ->addSlice('Excellent (5)',$value['score_5'],'#25b83f');
+                                ->addSlice('Excellent (5)',$value['score_5'],'#25b83f')
+                                ->withoutLegend();
                 if($key!='total'){
                     $locationLineModel->addPoint($key,$value['avg']);
                 }
@@ -83,8 +87,11 @@ class Report extends Component
             'lineModel'=>$locationLineModel??null
         ])->extends('layouts.app');
     }
-    public function updatedDate(){
-        dd('date updated');
+    public function hydrate(){
+        // dd('im just hydrate');
+    }
+    public function updated(){
+        // dd('date updated');
         $this->date['month']==null?$this->date['month']=now()->month:$this->date['month'];
         $this->date['year']==null?$this->date['year']=now()->year:$this->date['year'];
 
