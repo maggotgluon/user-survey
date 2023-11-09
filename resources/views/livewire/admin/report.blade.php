@@ -13,7 +13,7 @@
                         label="Year"
                         placeholder="Select Year"
                         :options="$list['year']"
-                        wire:model="date.year"
+                        wire:model.live="date.year"
                     />
                 </div>
                 <div class="flex flex-col justify-between">
