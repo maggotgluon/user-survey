@@ -72,7 +72,7 @@
             </x-card>
         </div>
         <div class="col-span-2">
-            <x-card title="chart overall">
+            <x-card title="chart overall" class="h-96">
                 <livewire:livewire-line-chart 
                         key="{{ $lineModel->reactiveKey() }}"
                         :line-chart-model="$lineModel"

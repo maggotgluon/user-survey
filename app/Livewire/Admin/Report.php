@@ -41,7 +41,7 @@ class Report extends Component
     }
     public function render()
     {   
-        $answer = Answer::whereIn('questions_id',[1])
+        $answer = Answer::whereIn('questions_id',[1,2])
             ->whereBetween('created_at',[$this->dateStart->toDateString(),$this->dateEnd->toDateString()])
             ->orderBy('socre', 'desc');
         
